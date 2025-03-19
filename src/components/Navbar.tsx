@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { signInWhithGithub, signOut, user } = useAuth();
+  const displayName = user?.user_metadata.user_name || user?.email;
 
   return (
     <nav className="fixed top-0 w-full z-40 bg-[rgba(10,10,10,0.8)] backdrop-blur-lg border-b border-white/10 shadow-lg">
@@ -42,6 +43,35 @@ export const Navbar = () => {
             </Link>
           </div>
 
+          {/* Desktop Auth */}
+          <div className="hidden md:flex items-center">
+            {user ? (
+              <div className="flex items-center space-x-4">
+                {user.user_metadata?.avatar_url && (
+                  <img
+                    src={user.user_metadata.avatar_url}
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                )}
+                <span className="text-gray-300">{displayName}</span>
+                <button
+                  onClick={signOut}
+                  className="bg-red-500 px-3 py-1 rounded"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={signInWhithGithub}
+                className="bg-blue-500 px-3 py-1 rounded"
+              >
+                Sign in with GitHub
+              </button>
+            )}
+          </div>
+
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
@@ -75,11 +105,6 @@ export const Navbar = () => {
             </button>
           </div>
         </div>
-      </div>
-
-      {/* Desktop Auth */}
-      <div>
-        <button onClick={signInWhithGithub}>Sign In Whith Github</button>
       </div>
 
       {/* Mobile Menu */}
