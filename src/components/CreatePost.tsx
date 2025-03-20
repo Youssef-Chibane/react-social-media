@@ -21,31 +21,56 @@ const CreatePost = () => {
 
   const { mutate } = useMutation({ mutationFn: createPost });
 
-  const handelSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     mutate({ title, content });
   };
   return (
-    <form onSubmit={handelSubmit}>
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-4">
       <div>
-        <label>Title</label>
+        <label htmlFor="title" className="block mb-2 font-medium">
+          Title
+        </label>
         <input
           type="text"
           id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full border border-white/10 bg-transparent p-2 rounded"
           required
-          onChange={(event) => setTitle(event.target.value)}
         />
       </div>
       <div>
-        <label>Content</label>
+        <label htmlFor="content" className="block mb-2 font-medium">
+          Content
+        </label>
         <textarea
           id="content"
-          required
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          className="w-full border border-white/10 bg-transparent p-2 rounded"
           rows={5}
-          onChange={(event) => setContent(event.target.value)}
+          required
         />
       </div>
-      <button type="submit">Create Post</button>
+
+      <div>
+        <label htmlFor="image" className="block mb-2 font-medium">
+          Upload Image
+        </label>
+        <input
+          type="file"
+          id="image"
+          accept="image/*"
+          className="w-full text-gray-200"
+        />
+      </div>
+      <button
+        type="submit"
+        className="bg-purple-500 text-white px-4 py-2 rounded cursor-pointer"
+      >
+        Create Post
+      </button>
     </form>
   );
 };
