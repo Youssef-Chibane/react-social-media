@@ -7,7 +7,7 @@ export interface Post {
   title: string;
   content: string;
   created_at: string;
-  image_url: String;
+  image_url: string;
 }
 
 const fetchPosts = async (): Promise<Post[]> => {
@@ -30,8 +30,6 @@ const PostList = () => {
   if (isLoading) <div>Loading Posts...</div>;
 
   if (error) <div>Error: {error.message}</div>;
-
-  console.log(data);
 
   return (
     <div className="flex flex-wrap gap-6 justify-center">
